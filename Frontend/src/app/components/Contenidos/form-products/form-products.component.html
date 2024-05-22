@@ -1,0 +1,56 @@
+<div class="flex flex-col items-center mb-96 mt-32">
+    <form class="bg-gray-100 p-8 rounded-lg shadow-md w-full max-w-md" [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col mb-5">
+            <label for="name">Nombre (máx: 20)*</label>
+            <input type="text" name="name" id="name" formControlName="name" [(ngModel)]="nameValue" class="border border-gray-300 rounded p-2" required>
+            <div *ngIf="nameValue === ''" class="text-red-500 text-xs mt-1">Nombre requerido</div>
+            <div *ngIf="nameValue.length > 20" class="text-red-500 text-xs mt-1">Nombre demasiado largo</div>
+        </div>
+        
+        <div class="flex flex-col mb-5">
+            <label for="description">Descripción (máx: 30)*</label>
+            <textarea name="description" id="description" rows="3" [disabled]="true" formControlName="description" [(ngModel)]="descriptionValue" class="border border-gray-300 rounded p-2"></textarea>
+            <div *ngIf="descriptionValue === ''" class="text-red-500 text-xs mt-1">Descripción requerida</div>
+            <div *ngIf="descriptionValue.length > 30" class="text-red-500 text-xs mt-1">Descripción demasiado larga</div>
+        </div>
+        
+        <div class="flex flex-col mb-5">
+            <label for="price">Precio*</label>
+            <input type="number" name="price" id="price" formControlName="price" [(ngModel)]="priceValue" class="border border-gray-300 rounded p-2" required>
+            <div *ngIf="priceValue === 0" class="text-red-500 text-xs mt-1">Precio requerido</div>
+            <div *ngIf="priceValue < 0" class="text-red-500 text-xs mt-1">Precio inválido</div>
+            <div *ngIf="priceValue > 10000" class="text-red-500 text-xs mt-1">Precio demasiado alto</div>
+        </div>
+        
+        <div class="flex flex-col mb-5">
+            <label for="image">Imagen*</label>
+            <input type="file" name="image" id="image" formControlName="image" (change)="onImageSelected($event)" class="border border-gray-300 rounded p-2" required>
+        </div>
+        
+        <div class="flex flex-col mb-5">
+            <label for="categoria">Categorías*</label>
+            <select name="categoria" id="categoria" formControlName="categoria" [(ngModel)]="categoriaValue" class="border border-gray-300 rounded p-2">
+                <option value="" disabled selected>Seleccionar categoría</option>
+                <option value="Equipacion L">Equipación Local</option>
+                <option value="Equipacion V">Equipación Visitante</option>
+                <option value="Equipacion E1">Equipación Entreno 1</option>
+                <option value="Equipacion E2">Equipación Entreno 2</option>
+                <option value="Pantalon F">Pantalon F</option>
+                <option value="Pantalon M">Pantalon M</option>
+                <option value="Chaqueta">Chaqueta</option>
+                <option value="Mochila">Mochila</option>
+            </select>
+            <div *ngIf="categoriaValue === ''" class="text-red-500 text-xs mt-1">Categoría requerida</div>
+        </div>
+        
+        <div class="flex flex-col mb-5">
+            <label for="onSale" class="text-lg text-gray-700">En venta</label>
+            <input type="checkbox" name="onSale" id="onSale" formControlName="onSale" [(ngModel)]="onSaleValue" class="h-6 w-6 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" required>
+        </div>
+        
+        <button type="submit" [disabled]="productForm.invalid" class="disabled:opacity-50 disabled:cursor-not-allowed bg-blue-500 text-white font-medium py-2 px-4 rounded mt-4 w-full">
+            Enviar
+        </button>
+    </form>
+  </div>
+  
